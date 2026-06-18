@@ -39,6 +39,11 @@ exclude = [
     "*.egg-info",
 ]
 
+[tool.ruff.lint.per-file-ignores]
+# Exercise starter files contain intentional unused variables as scaffolding.
+# Suppress F841 (assigned but unused) for all exercise.py files.
+"exercises/*/exercise.py" = ["F841"]
+
 [tool.ruff.lint.isort]
 # Put standard library imports before third-party (psutil, schedule) imports
 known-third-party = ["psutil", "schedule"]
