@@ -2,6 +2,8 @@
 Exercise 10 — System Health Snapshot  ✅ SOLUTION
 """
 
+from __future__ import annotations
+
 import json
 import socket
 from datetime import datetime

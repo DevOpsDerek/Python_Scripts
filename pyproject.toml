@@ -49,7 +49,7 @@ exclude = [
 known-third-party = ["psutil", "schedule"]
 
 [tool.pytest.ini_options]
-testpaths    = ["tests"]
-addopts      = "-v --tb=short"
-# Ignore exercise starter files — they contain intentional incomplete code
-collect_ignore_glob = ["exercises/*/exercise.py"]
+testpaths = ["tests"]
+addopts   = "-v --tb=short"
+# Exercise starter files contain intentional incomplete code — don't collect them
+norecursedirs = ["exercises"]

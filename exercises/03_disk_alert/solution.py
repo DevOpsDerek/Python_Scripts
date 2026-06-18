@@ -2,6 +2,8 @@
 Exercise 03 — Disk Space Alert  ✅ SOLUTION
 """
 
+from __future__ import annotations
+
 import sys
 
 import psutil

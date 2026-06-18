@@ -9,6 +9,8 @@ Concepts covered:
   - Safety patterns: dry-run mode, confirmation, protected list
 """
 
+from __future__ import annotations
+
 import time
 
 import psutil  # pip install psutil
