@@ -1,0 +1,44 @@
+# pyproject.toml — Ruff linting configuration for the SysAdmin Script Library
+# Run:  python lint.py          (or: ruff check .)
+
+[tool.ruff]
+# Target Python 3.8+ so beginners on slightly older systems aren't blocked
+target-version = "py38"
+line-length = 100
+
+[tool.ruff.lint]
+# Rule sets enabled:
+#   E / W  — PEP 8 style (pycodestyle)
+#   F      — Pyflakes: unused imports, undefined names, etc.
+#   I      — isort: import ordering
+#   UP     — pyupgrade: modernise Python syntax
+#   B      — flake8-bugbear: common bugs and design issues
+#   SIM    — flake8-simplify: suggest simpler code patterns
+select = ["E", "W", "F", "I", "UP", "B", "SIM"]
+
+ignore = [
+    # B006 — mutable default arguments (common in beginner code, explained in comments)
+    "B006",
+    # B007 — loop variable not used in loop body (false positives with _vars)
+    "B007",
+    # E501 — line too long; we set line-length above, this disables the hard error
+    # so learners aren't blocked by slightly long comment lines
+    "E501",
+    # SIM105 — contextlib.suppress() is valid but explicit try/except is clearer for beginners
+    "SIM105",
+    # SIM108 — ternary operator suggestion (explicit if/else is clearer for beginners)
+    "SIM108",
+    # UP007 — use X | Y for type unions (requires Python 3.10+, we target 3.8)
+    "UP007",
+]
+
+# Treat these files/dirs as excluded from linting
+exclude = [
+    ".git",
+    "__pycache__",
+    "*.egg-info",
+]
+
+[tool.ruff.lint.isort]
+# Put standard library imports before third-party (psutil, schedule) imports
+known-third-party = ["psutil", "schedule"]

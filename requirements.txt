@@ -1,0 +1,12 @@
+# Python SysAdmin Script Library - Dependencies
+#
+# Most scripts use only Python's standard library (os, pathlib, socket, etc.)
+# The packages below are needed for system/process monitoring and automation.
+#
+# Install with: pip install -r requirements.txt
+
+# System and process information (CPU, memory, disk, network I/O)
+psutil>=5.9.0
+
+# Task scheduling (used in 06_automation/scheduled_backup.py)
+schedule>=1.2.0
