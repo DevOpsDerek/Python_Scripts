@@ -70,9 +70,9 @@ def backup_directory(source: str, destination: str, compress: bool = False) -> P
         log.info("Compressing to archive…")
         archive_path = shutil.make_archive(
             base_name=archive_base,
-            format="gztar",      # gztar = .tar.gz
-            root_dir=src.parent, # The directory that contains src
-            base_dir=src.name,   # The sub-directory to archive
+            format="gztar",  # gztar = .tar.gz
+            root_dir=src.parent,  # The directory that contains src
+            base_dir=src.name,  # The sub-directory to archive
         )
         result = Path(archive_path)
         size = result.stat().st_size
@@ -109,8 +109,8 @@ def backup_file(source: str, destination: str) -> Path:
     dest_dir.mkdir(parents=True, exist_ok=True)
 
     # Insert the timestamp before the file extension: report.pdf → report_backup_2024-06-18.pdf
-    stem = src.stem     # filename without extension
-    suffix = src.suffix # extension including the dot, e.g. '.pdf'
+    stem = src.stem  # filename without extension
+    suffix = src.suffix  # extension including the dot, e.g. '.pdf'
     backup_name = f"{stem}_backup_{make_timestamp()}{suffix}"
     dest = dest_dir / backup_name
 

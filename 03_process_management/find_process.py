@@ -80,7 +80,9 @@ def print_process_detail(proc: psutil.Process) -> None:
             # Start time and running duration
             start = datetime.fromtimestamp(proc.create_time())
             uptime = datetime.now() - start
-            print(f"  Started:    {start.strftime('%Y-%m-%d %H:%M:%S')}  (running {uptime.seconds // 60}m)")
+            print(
+                f"  Started:    {start.strftime('%Y-%m-%d %H:%M:%S')}  (running {uptime.seconds // 60}m)"
+            )
 
             # CPU and memory
             # NOTE: cpu_percent needs an interval or a prior call to be meaningful
@@ -124,8 +126,12 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Find processes by name or keyword.")
-    parser.add_argument("keyword", help="Search keyword (case-insensitive, checks name and cmdline)")
-    parser.add_argument("-d", "--detail", action="store_true", help="Show full details for each match")
+    parser.add_argument(
+        "keyword", help="Search keyword (case-insensitive, checks name and cmdline)"
+    )
+    parser.add_argument(
+        "-d", "--detail", action="store_true", help="Show full details for each match"
+    )
     args = parser.parse_args()
 
     print(f"\n  Searching for processes matching: '{args.keyword}'\n")

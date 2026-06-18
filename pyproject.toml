@@ -47,3 +47,9 @@ exclude = [
 [tool.ruff.lint.isort]
 # Put standard library imports before third-party (psutil, schedule) imports
 known-third-party = ["psutil", "schedule"]
+
+[tool.pytest.ini_options]
+testpaths    = ["tests"]
+addopts      = "-v --tb=short"
+# Ignore exercise starter files — they contain intentional incomplete code
+collect_ignore_glob = ["exercises/*/exercise.py"]

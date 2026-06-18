@@ -28,19 +28,18 @@ SYSLOG_PATTERN = re.compile(
 
 # Apache/Nginx combined log format
 APACHE_PATTERN = re.compile(
-    r'(?P<ip>[\d.]+)\s+-\s+-\s+\[(?P<datetime>[^\]]+)\]\s+'
+    r"(?P<ip>[\d.]+)\s+-\s+-\s+\[(?P<datetime>[^\]]+)\]\s+"
     r'"(?P<method>\w+)\s+(?P<path>\S+)\s+\S+"\s+'
-    r'(?P<status>\d{3})\s+(?P<size>\d+|-)'
+    r"(?P<status>\d{3})\s+(?P<size>\d+|-)"
 )
 
 # Generic "level" detector — matches ERROR, WARNING, WARN, INFO, DEBUG, CRITICAL
-LEVEL_PATTERN = re.compile(
-    r"\b(ERROR|CRITICAL|WARNING|WARN|INFO|DEBUG|FATAL)\b",
-    re.IGNORECASE
-)
+LEVEL_PATTERN = re.compile(r"\b(ERROR|CRITICAL|WARNING|WARN|INFO|DEBUG|FATAL)\b", re.IGNORECASE)
 
 
-def iter_lines(path: str, encoding: str = "utf-8", errors: str = "replace") -> Generator[str, None, None]:
+def iter_lines(
+    path: str, encoding: str = "utf-8", errors: str = "replace"
+) -> Generator[str, None, None]:
     """Yield lines from a file one at a time (memory-efficient for large logs).
 
     Args:
@@ -73,12 +72,12 @@ def analyse_log(log_path: str) -> Dict[str, Any]:
         "file": str(path),
         "size_bytes": path.stat().st_size,
         "total_lines": 0,
-        "level_counts": Counter(),         # {level: count}
-        "service_counts": Counter(),       # {service: count}  (syslog only)
-        "ip_counts": Counter(),            # {ip: count}       (apache only)
-        "status_counts": Counter(),        # {http_status: count}
-        "errors": [],                      # First 20 error lines
-        "hourly_counts": defaultdict(int), # {hour_string: count}
+        "level_counts": Counter(),  # {level: count}
+        "service_counts": Counter(),  # {service: count}  (syslog only)
+        "ip_counts": Counter(),  # {ip: count}       (apache only)
+        "status_counts": Counter(),  # {http_status: count}
+        "errors": [],  # First 20 error lines
+        "hourly_counts": defaultdict(int),  # {hour_string: count}
     }
 
     for line in iter_lines(log_path):
@@ -128,7 +127,9 @@ def print_report(stats: Dict[str, Any]) -> None:
         for level, count in stats["level_counts"].most_common():
             bar = "█" * min(count, 40)
             colour = {
-                "ERROR": "\033[91m", "CRITICAL": "\033[91m", "FATAL": "\033[91m",
+                "ERROR": "\033[91m",
+                "CRITICAL": "\033[91m",
+                "FATAL": "\033[91m",
                 "WARNING": "\033[93m",
                 "INFO": "\033[94m",
                 "DEBUG": "\033[90m",
@@ -155,8 +156,11 @@ def print_report(stats: Dict[str, Any]) -> None:
         print("\n  HTTP STATUS CODES")
         print(f"  {'─' * 30}")
         for status, count in sorted(stats["status_counts"].items()):
-            colour = "\033[91m" if status.startswith("5") else (
-                     "\033[93m" if status.startswith("4") else "")
+            colour = (
+                "\033[91m"
+                if status.startswith("5")
+                else ("\033[93m" if status.startswith("4") else "")
+            )
             reset = "\033[0m" if colour else ""
             print(f"  {colour}{status}{reset}   {count:>7,}")
 

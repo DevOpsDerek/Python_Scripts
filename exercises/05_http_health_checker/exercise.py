@@ -34,9 +34,9 @@ from typing import Optional
 @dataclass
 class CheckResult:
     url: str
-    status: Optional[int]   # HTTP status code, or None on error
-    elapsed_s: float        # How long the request took in seconds
-    error: str = ""         # Error message if request failed
+    status: Optional[int]  # HTTP status code, or None on error
+    elapsed_s: float  # How long the request took in seconds
+    error: str = ""  # Error message if request failed
 
 
 def check_url(url: str, timeout: float = 5.0) -> CheckResult:
@@ -104,7 +104,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Check HTTP health of URLs.")
     parser.add_argument("--urls", nargs="+", default=None, help="URLs to check")
     parser.add_argument("--file", help="File with one URL per line")
-    parser.add_argument("--timeout", type=float, default=5.0, help="Timeout per request (default: 5s)")
+    parser.add_argument(
+        "--timeout", type=float, default=5.0, help="Timeout per request (default: 5s)"
+    )
     args = parser.parse_args()
 
     urls = args.urls or []

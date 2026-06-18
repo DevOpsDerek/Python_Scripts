@@ -107,7 +107,9 @@ def report(directory: str, top_n: int) -> None:
     total_bytes = sum(e["size_bytes"] for e in entries)
     total_files = sum(e["file_count"] for e in entries)
     print("  " + "─" * 60)
-    print(f"  Total: {bytes_to_human(total_bytes)} across {len(entries)} director{'y' if len(entries)==1 else 'ies'} ({total_files:,} files)\n")
+    print(
+        f"  Total: {bytes_to_human(total_bytes)} across {len(entries)} director{'y' if len(entries) == 1 else 'ies'} ({total_files:,} files)\n"
+    )
 
 
 # ── Entry point ──────────────────────────────────────────────────────────────

@@ -157,8 +157,12 @@ if __name__ == "__main__":
     parser.add_argument("host", help="Target hostname or IP address")
     parser.add_argument("-s", "--start", type=int, default=1, help="Start port (default: 1)")
     parser.add_argument("-e", "--end", type=int, default=1024, help="End port (default: 1024)")
-    parser.add_argument("-w", "--workers", type=int, default=100, help="Concurrent threads (default: 100)")
-    parser.add_argument("-t", "--timeout", type=float, default=0.5, help="Per-port timeout seconds (default: 0.5)")
+    parser.add_argument(
+        "-w", "--workers", type=int, default=100, help="Concurrent threads (default: 100)"
+    )
+    parser.add_argument(
+        "-t", "--timeout", type=float, default=0.5, help="Per-port timeout seconds (default: 0.5)"
+    )
     args = parser.parse_args()
 
     open_ports = scan_ports(args.host, args.start, args.end, args.workers, args.timeout)

@@ -48,9 +48,9 @@ def ping_host(host: str, count: int = 3) -> PingResult:
         # subprocess.run() runs the command and captures its output
         result = subprocess.run(
             cmd,
-            capture_output=True,   # capture both stdout and stderr
-            text=True,             # decode bytes to string automatically
-            timeout=count * 3,     # overall timeout: count × 3 seconds
+            capture_output=True,  # capture both stdout and stderr
+            text=True,  # decode bytes to string automatically
+            timeout=count * 3,  # overall timeout: count × 3 seconds
         )
 
         output = result.stdout + result.stderr
@@ -154,7 +154,9 @@ if __name__ == "__main__":
     parser.add_argument("hosts", nargs="*", help="Hostnames or IPs to ping")
     parser.add_argument("-f", "--file", help="File with one host per line")
     parser.add_argument("-c", "--count", type=int, default=3, help="Packets per host (default: 3)")
-    parser.add_argument("-w", "--workers", type=int, default=10, help="Parallel threads (default: 10)")
+    parser.add_argument(
+        "-w", "--workers", type=int, default=10, help="Parallel threads (default: 10)"
+    )
     args = parser.parse_args()
 
     host_list = args.hosts or []

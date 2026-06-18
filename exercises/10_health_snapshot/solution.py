@@ -13,20 +13,20 @@ import psutil
 def collect_cpu() -> dict:
     freq = psutil.cpu_freq()
     return {
-        "percent":         psutil.cpu_percent(interval=1),
-        "cores_physical":  psutil.cpu_count(logical=False),
-        "cores_logical":   psutil.cpu_count(logical=True),
-        "freq_mhz":        round(freq.current, 1) if freq else 0,
+        "percent": psutil.cpu_percent(interval=1),
+        "cores_physical": psutil.cpu_count(logical=False),
+        "cores_logical": psutil.cpu_count(logical=True),
+        "freq_mhz": round(freq.current, 1) if freq else 0,
     }
 
 
 def collect_memory() -> dict:
     m = psutil.virtual_memory()
     return {
-        "total_gb":     round(m.total     / 1_073_741_824, 2),
-        "used_gb":      round(m.used      / 1_073_741_824, 2),
+        "total_gb": round(m.total / 1_073_741_824, 2),
+        "used_gb": round(m.used / 1_073_741_824, 2),
         "available_gb": round(m.available / 1_073_741_824, 2),
-        "percent":      m.percent,
+        "percent": m.percent,
     }
 
 
@@ -37,9 +37,9 @@ def collect_disk() -> dict:
             u = psutil.disk_usage(part.mountpoint)
             result[part.mountpoint] = {
                 "total_gb": round(u.total / 1_073_741_824, 2),
-                "used_gb":  round(u.used  / 1_073_741_824, 2),
-                "free_gb":  round(u.free  / 1_073_741_824, 2),
-                "percent":  u.percent,
+                "used_gb": round(u.used / 1_073_741_824, 2),
+                "free_gb": round(u.free / 1_073_741_824, 2),
+                "percent": u.percent,
             }
         except PermissionError:
             continue
@@ -51,12 +51,14 @@ def collect_top_processes(top_n: int = 5) -> list:
     for p in psutil.process_iter(["pid", "name", "cpu_percent", "memory_info"]):
         try:
             rss = p.info["memory_info"].rss if p.info["memory_info"] else 0
-            procs.append({
-                "pid":     p.info["pid"],
-                "name":    p.info["name"] or "",
-                "cpu_pct": p.info["cpu_percent"] or 0.0,
-                "mem_mb":  round(rss / 1_048_576, 1),
-            })
+            procs.append(
+                {
+                    "pid": p.info["pid"],
+                    "name": p.info["name"] or "",
+                    "cpu_pct": p.info["cpu_percent"] or 0.0,
+                    "mem_mb": round(rss / 1_048_576, 1),
+                }
+            )
         except (psutil.NoSuchProcess, psutil.AccessDenied):
             continue
     procs.sort(key=lambda x: x["cpu_pct"], reverse=True)
@@ -65,12 +67,12 @@ def collect_top_processes(top_n: int = 5) -> list:
 
 def build_snapshot() -> dict:
     return {
-        "generated_at":   datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "hostname":       socket.gethostname(),
-        "cpu":            collect_cpu(),
-        "memory":         collect_memory(),
-        "disk":           collect_disk(),
-        "top_processes":  collect_top_processes(),
+        "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "hostname": socket.gethostname(),
+        "cpu": collect_cpu(),
+        "memory": collect_memory(),
+        "disk": collect_disk(),
+        "top_processes": collect_top_processes(),
     }
 
 
@@ -106,7 +108,7 @@ def compare_snapshots(old: dict, new: dict) -> None:
             arrow = f"= {diff:+.1f}{unit}"
         print(f"  {label:<25} {old_val:.1f}{unit} → {new_val:.1f}{unit}  {arrow}")
 
-    delta("CPU usage",    old["cpu"]["percent"],    new["cpu"]["percent"])
+    delta("CPU usage", old["cpu"]["percent"], new["cpu"]["percent"])
     delta("Memory usage", old["memory"]["percent"], new["memory"]["percent"])
 
     for mount, info in new["disk"].items():
@@ -120,7 +122,9 @@ def print_summary(snap: dict) -> None:
     print(f"\n  🖥️  Health Snapshot  —  {snap['generated_at']}")
     print(f"  Host: {snap['hostname']}")
     print(f"  CPU:  {snap['cpu']['percent']}%")
-    print(f"  RAM:  {snap['memory']['percent']}%  ({snap['memory']['used_gb']} / {snap['memory']['total_gb']} GB)")
+    print(
+        f"  RAM:  {snap['memory']['percent']}%  ({snap['memory']['used_gb']} / {snap['memory']['total_gb']} GB)"
+    )
     for mount, d in snap["disk"].items():
         print(f"  Disk {mount}: {d['percent']}%")
 

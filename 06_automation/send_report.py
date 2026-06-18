@@ -74,9 +74,9 @@ def gather_stats() -> dict:
     try:
         disk = psutil.disk_usage("/")
         disk_total = f"{disk.total / 1e9:.1f}"
-        disk_used  = f"{disk.used  / 1e9:.1f}"
-        disk_free  = f"{disk.free  / 1e9:.1f}"
-        disk_pct   = disk.percent
+        disk_used = f"{disk.used / 1e9:.1f}"
+        disk_free = f"{disk.free / 1e9:.1f}"
+        disk_pct = disk.percent
     except Exception:
         disk_total = disk_used = disk_free = "N/A"
         disk_pct = 0
@@ -96,20 +96,20 @@ def gather_stats() -> dict:
     ]
 
     return {
-        "timestamp":  datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "hostname":   socket.gethostname(),
-        "cpu_pct":    f"{cpu_pct:.1f}",
-        "cpu_cores":  cores,
-        "load_avg":   f"{load[0]:.2f}  {load[1]:.2f}  {load[2]:.2f}  (1m/5m/15m)",
-        "mem_total":  f"{mem.total / 1e9:.1f}",
-        "mem_used":   f"{mem.used  / 1e9:.1f}",
-        "mem_free":   f"{mem.available / 1e9:.1f}",
-        "mem_pct":    mem.percent,
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "hostname": socket.gethostname(),
+        "cpu_pct": f"{cpu_pct:.1f}",
+        "cpu_cores": cores,
+        "load_avg": f"{load[0]:.2f}  {load[1]:.2f}  {load[2]:.2f}  (1m/5m/15m)",
+        "mem_total": f"{mem.total / 1e9:.1f}",
+        "mem_used": f"{mem.used / 1e9:.1f}",
+        "mem_free": f"{mem.available / 1e9:.1f}",
+        "mem_pct": mem.percent,
         "disk_total": disk_total,
-        "disk_used":  disk_used,
-        "disk_free":  disk_free,
-        "disk_pct":   disk_pct,
-        "top_procs":  "\n".join(top_procs_lines) if top_procs_lines else "  (none)",
+        "disk_used": disk_used,
+        "disk_free": disk_free,
+        "disk_pct": disk_pct,
+        "top_procs": "\n".join(top_procs_lines) if top_procs_lines else "  (none)",
     }
 
 
@@ -159,7 +159,7 @@ def send_email(
     # smtplib.SMTP manages the connection lifecycle
     with smtplib.SMTP(smtp_host, smtp_port) as server:
         if use_tls:
-            server.starttls()              # Upgrade connection to TLS
+            server.starttls()  # Upgrade connection to TLS
         server.login(smtp_user, smtp_pass)
         server.sendmail(from_addr, to_addr, msg.as_string())
 
@@ -172,9 +172,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate and email a system health report.")
     parser.add_argument("--to", help="Recipient email address")
     parser.add_argument("--from-addr", help="Sender email address")
-    parser.add_argument("--smtp-host", default="smtp.gmail.com", help="SMTP server (default: smtp.gmail.com)")
+    parser.add_argument(
+        "--smtp-host", default="smtp.gmail.com", help="SMTP server (default: smtp.gmail.com)"
+    )
     parser.add_argument("--smtp-port", type=int, default=587, help="SMTP port (default: 587)")
-    parser.add_argument("--print-only", action="store_true", help="Print the report without sending")
+    parser.add_argument(
+        "--print-only", action="store_true", help="Print the report without sending"
+    )
     args = parser.parse_args()
 
     report = build_report()

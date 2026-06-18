@@ -18,8 +18,13 @@ import psutil  # pip install psutil
 # Expand this list based on your environment.
 # ---------------------------------------------------------------------------
 PROTECTED_NAMES = {
-    "init", "systemd", "launchd", "kernel_task",
-    "sshd", "login", "python",  # Don't kill your own interpreter!
+    "init",
+    "systemd",
+    "launchd",
+    "kernel_task",
+    "sshd",
+    "login",
+    "python",  # Don't kill your own interpreter!
 }
 
 
@@ -136,7 +141,9 @@ if __name__ == "__main__":
     group.add_argument("--pid", type=int, help="Terminate process with this PID")
     group.add_argument("--name", help="Terminate all processes matching this name")
     parser.add_argument("--force", action="store_true", help="Use SIGKILL instead of SIGTERM")
-    parser.add_argument("--dry-run", action="store_true", help="Show what would be killed, without doing it")
+    parser.add_argument(
+        "--dry-run", action="store_true", help="Show what would be killed, without doing it"
+    )
     parser.add_argument("-y", "--yes", action="store_true", help="Skip confirmation prompt")
     args = parser.parse_args()
 

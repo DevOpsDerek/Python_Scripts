@@ -7,8 +7,12 @@ import sys
 import psutil
 
 
-def green(s):  return f"\033[92m{s}\033[0m"
-def red(s):    return f"\033[91m{s}\033[0m"
+def green(s):
+    return f"\033[92m{s}\033[0m"
+
+
+def red(s):
+    return f"\033[91m{s}\033[0m"
 
 
 def check_disk(mount: str, threshold: float) -> dict | None:
@@ -17,12 +21,12 @@ def check_disk(mount: str, threshold: float) -> dict | None:
     except PermissionError:
         return None
     return {
-        "mount":    mount,
+        "mount": mount,
         "total_gb": usage.total / 1_073_741_824,
-        "used_gb":  usage.used  / 1_073_741_824,
-        "free_gb":  usage.free  / 1_073_741_824,
-        "percent":  usage.percent,
-        "alert":    usage.percent > threshold,
+        "used_gb": usage.used / 1_073_741_824,
+        "free_gb": usage.free / 1_073_741_824,
+        "percent": usage.percent,
+        "alert": usage.percent > threshold,
     }
 
 
@@ -42,10 +46,7 @@ def print_report(results: list, threshold: float) -> int:
             icon, pct_str = "✅", green(f"{pct:.1f}%")
 
         tag = "  ← ABOVE THRESHOLD" if r["alert"] else ""
-        print(
-            f"  {icon}  {r['mount']:<15} {pct_str:<20} "
-            f"(free: {r['free_gb']:>6.1f} GB){tag}"
-        )
+        print(f"  {icon}  {r['mount']:<15} {pct_str:<20} (free: {r['free_gb']:>6.1f} GB){tag}")
 
     print()
     if alerts:

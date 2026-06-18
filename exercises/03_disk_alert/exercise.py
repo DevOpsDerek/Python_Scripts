@@ -33,9 +33,16 @@ import sys
 
 # Colour helpers — these are ANSI escape codes for terminal colours.
 # You don't need to change these; just call green("text") etc.
-def green(s):  return f"\033[92m{s}\033[0m"
-def yellow(s): return f"\033[93m{s}\033[0m"
-def red(s):    return f"\033[91m{s}\033[0m"
+def green(s):
+    return f"\033[92m{s}\033[0m"
+
+
+def yellow(s):
+    return f"\033[93m{s}\033[0m"
+
+
+def red(s):
+    return f"\033[91m{s}\033[0m"
 
 
 def check_disk(mount: str, threshold: float) -> dict:
@@ -82,14 +89,11 @@ def print_report(results: list, threshold: float) -> int:
         #   Below threshold     → green ✅
         #   Above threshold     → red   ❌  (increment `alerts`)
         # Hint: Use the colour helper functions defined above.
-        icon = "?"   # Replace with your logic
+        icon = "?"  # Replace with your logic
         pct_str = f"{pct:.1f}%"  # TODO: wrap in a colour function
 
         alert_tag = "  ← ABOVE THRESHOLD" if r["alert"] else ""
-        print(
-            f"  {icon}  {r['mount']:<15} {pct_str:<8} "
-            f"(free: {r['free_gb']:>6.1f} GB){alert_tag}"
-        )
+        print(f"  {icon}  {r['mount']:<15} {pct_str:<8} (free: {r['free_gb']:>6.1f} GB){alert_tag}")
 
     print()
     if alerts:
@@ -107,10 +111,12 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Check disk space thresholds.")
-    parser.add_argument("--threshold", type=float, default=80.0,
-                        help="Alert threshold in percent (default: 80)")
-    parser.add_argument("--mounts", nargs="+", default=None,
-                        help="Mount points to check (default: all partitions)")
+    parser.add_argument(
+        "--threshold", type=float, default=80.0, help="Alert threshold in percent (default: 80)"
+    )
+    parser.add_argument(
+        "--mounts", nargs="+", default=None, help="Mount points to check (default: all partitions)"
+    )
     args = parser.parse_args()
 
     # TODO: Build the list of mount points to check.

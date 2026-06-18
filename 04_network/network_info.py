@@ -33,7 +33,7 @@ def get_public_ip() -> str:
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
             s.connect(("8.8.8.8", 80))  # UDP connect — no data sent
-            return s.getsockname()[0]    # Returns the local IP used for routing
+            return s.getsockname()[0]  # Returns the local IP used for routing
     except Exception:
         return "N/A"
 
@@ -57,21 +57,21 @@ def show_hostname() -> None:
 
 def show_interfaces() -> None:
     """Show all network interfaces with their addresses and statistics."""
-    addrs = psutil.net_if_addrs()       # {iface: [snic(...)]}
-    stats = psutil.net_if_stats()       # {iface: snicstats(...)}
-    io    = psutil.net_io_counters(pernic=True)  # {iface: snetio(...)}
+    addrs = psutil.net_if_addrs()  # {iface: [snic(...)]}
+    stats = psutil.net_if_stats()  # {iface: snicstats(...)}
+    io = psutil.net_io_counters(pernic=True)  # {iface: snetio(...)}
 
     # Address family constants
-    AF_INET  = socket.AF_INET   # IPv4
+    AF_INET = socket.AF_INET  # IPv4
     AF_INET6 = socket.AF_INET6  # IPv6
-    AF_LINK  = psutil.AF_LINK   # MAC address
+    AF_LINK = psutil.AF_LINK  # MAC address
 
     print(f"\n  {'─' * 55}")
     print("  🔌  NETWORK INTERFACES")
 
     for iface_name in sorted(addrs.keys()):
         iface_stats = stats.get(iface_name)
-        iface_io    = io.get(iface_name)
+        iface_io = io.get(iface_name)
 
         # Status badge
         if iface_stats and iface_stats.isup:
@@ -147,7 +147,9 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Show network interfaces and connections.")
-    parser.add_argument("--connections", action="store_true", help="Show active TCP/UDP connections")
+    parser.add_argument(
+        "--connections", action="store_true", help="Show active TCP/UDP connections"
+    )
     args = parser.parse_args()
 
     show_hostname()

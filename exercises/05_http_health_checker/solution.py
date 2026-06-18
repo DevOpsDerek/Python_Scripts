@@ -25,14 +25,13 @@ def check_url(url: str, timeout: float = 5.0) -> CheckResult:
             status = resp.status
         return CheckResult(url=url, status=status, elapsed_s=time.time() - start)
     except urllib.error.HTTPError as e:
-        return CheckResult(url=url, status=e.code, elapsed_s=time.time() - start,
-                           error=str(e.reason))
+        return CheckResult(
+            url=url, status=e.code, elapsed_s=time.time() - start, error=str(e.reason)
+        )
     except urllib.error.URLError as e:
-        return CheckResult(url=url, status=None, elapsed_s=time.time() - start,
-                           error=str(e.reason))
+        return CheckResult(url=url, status=None, elapsed_s=time.time() - start, error=str(e.reason))
     except Exception as e:
-        return CheckResult(url=url, status=None, elapsed_s=time.time() - start,
-                           error=str(e))
+        return CheckResult(url=url, status=None, elapsed_s=time.time() - start, error=str(e))
 
 
 def print_report(results: list, timeout: float) -> None:

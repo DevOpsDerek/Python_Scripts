@@ -25,7 +25,6 @@ HOW TO RUN:
 """
 
 
-
 def is_process_running(name: str) -> tuple:
     """Check if at least one process with *name* is running.
 
@@ -53,8 +52,9 @@ def watch(process_name: str, interval: float) -> None:
         process_name: Process name to monitor.
         interval:     Seconds between checks.
     """
-    print(f"\n  👀 Watching for process: '{process_name}'  "
-          f"(check every {interval}s, Ctrl+C to stop)")
+    print(
+        f"\n  👀 Watching for process: '{process_name}'  (check every {interval}s, Ctrl+C to stop)"
+    )
     print("  " + "─" * 60)
 
     # TODO: Write a while True loop that:
@@ -72,8 +72,9 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Watch for a running process.")
     parser.add_argument("process", help="Process name to watch (e.g. python, nginx)")
-    parser.add_argument("-i", "--interval", type=float, default=5.0,
-                        help="Check interval in seconds (default: 5)")
+    parser.add_argument(
+        "-i", "--interval", type=float, default=5.0, help="Check interval in seconds (default: 5)"
+    )
     args = parser.parse_args()
 
     # TODO: Call watch() with the parsed arguments.

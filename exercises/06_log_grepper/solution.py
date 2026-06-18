@@ -42,6 +42,7 @@ def search(path: str, pattern: str, extensions: list, ignore_case: bool) -> None
     print("  " + "─" * 60)
 
     flags = re.IGNORECASE if ignore_case else 0
+
     def highlight(line: str) -> str:
         return re.sub(pattern, lambda m: f"\033[93m{m.group()}\033[0m", line, flags=flags)
 

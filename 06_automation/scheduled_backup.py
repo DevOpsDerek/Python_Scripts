@@ -31,8 +31,8 @@ def setup_logging(log_file: str = "backup_scheduler.log") -> None:
         format="%(asctime)s  %(levelname)-8s  %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
         handlers=[
-            logging.FileHandler(log_file),         # Write to file
-            logging.StreamHandler(sys.stdout),     # Also print to terminal
+            logging.FileHandler(log_file),  # Write to file
+            logging.StreamHandler(sys.stdout),  # Also print to terminal
         ],
     )
 
@@ -98,6 +98,7 @@ def install_signal_handlers() -> None:
 
     Without this, the process prints a messy traceback on Ctrl+C.
     """
+
     def shutdown(signum, frame):
         log.info("Received signal %d — shutting down scheduler.", signum)
         sys.exit(0)
@@ -163,12 +164,18 @@ if __name__ == "__main__":
     parser.add_argument("source", help="Directory to back up")
     parser.add_argument("destination", help="Destination for backup archives")
     parser.add_argument(
-        "-i", "--interval",
+        "-i",
+        "--interval",
         default="daily",
         help="Schedule: hourly, daily, weekly, or NNm (e.g. 30m). Default: daily",
     )
-    parser.add_argument("--no-compress", dest="compress", action="store_false", default=True,
-                        help="Copy directory instead of creating .tar.gz")
+    parser.add_argument(
+        "--no-compress",
+        dest="compress",
+        action="store_false",
+        default=True,
+        help="Copy directory instead of creating .tar.gz",
+    )
     args = parser.parse_args()
 
     main(args.source, args.destination, args.interval, args.compress)

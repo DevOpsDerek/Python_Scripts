@@ -51,13 +51,17 @@ def report(directory: str, top_n: int) -> None:
     print("  " + "─" * 60)
 
     for rank, entry in enumerate(entries, start=1):
-        print(f"  {rank:<6} {bytes_to_human(entry['size_bytes']):>10}  {entry['file_count']:>8,}   {entry['name']}")
+        print(
+            f"  {rank:<6} {bytes_to_human(entry['size_bytes']):>10}  {entry['file_count']:>8,}   {entry['name']}"
+        )
 
     total_bytes = sum(e["size_bytes"] for e in entries)
     total_files = sum(e["file_count"] for e in entries)
     print("  " + "─" * 60)
-    print(f"  Total: {bytes_to_human(total_bytes)} across {len(entries)} "
-          f"director{'y' if len(entries) == 1 else 'ies'} ({total_files:,} files)\n")
+    print(
+        f"  Total: {bytes_to_human(total_bytes)} across {len(entries)} "
+        f"director{'y' if len(entries) == 1 else 'ies'} ({total_files:,} files)\n"
+    )
 
 
 if __name__ == "__main__":

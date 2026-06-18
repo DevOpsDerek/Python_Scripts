@@ -26,11 +26,11 @@ def render_bar(percent: float, width: int = 35) -> str:
     bar = "█" * filled + "░" * (width - filled)
 
     if percent < 70:
-        colour = "\033[92m"    # Green
+        colour = "\033[92m"  # Green
     elif percent < 90:
-        colour = "\033[93m"    # Yellow
+        colour = "\033[93m"  # Yellow
     else:
-        colour = "\033[91m"    # Red
+        colour = "\033[91m"  # Red
 
     return f"{colour}[{bar}]\033[0m {percent:.1f}%"
 
@@ -96,7 +96,9 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Show memory usage and top processes.")
-    parser.add_argument("-n", "--top", type=int, default=15, help="Number of top processes (default: 15)")
+    parser.add_argument(
+        "-n", "--top", type=int, default=15, help="Number of top processes (default: 15)"
+    )
     args = parser.parse_args()
 
     show_memory()

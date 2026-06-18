@@ -127,8 +127,12 @@ if __name__ == "__main__":
     parser.add_argument("pattern", help="Regex pattern to search for")
     parser.add_argument("path", help="File or directory to search")
     parser.add_argument("-i", "--ignore-case", action="store_true", help="Case-insensitive search")
-    parser.add_argument("--ext", action="append", default=[".log", ".txt"],
-                        help="File extension to include (can repeat: --ext .log --ext .out)")
+    parser.add_argument(
+        "--ext",
+        action="append",
+        default=[".log", ".txt"],
+        help="File extension to include (can repeat: --ext .log --ext .out)",
+    )
     args = parser.parse_args()
 
     search(args.path, args.pattern, args.ext, args.ignore_case)

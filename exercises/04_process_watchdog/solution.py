@@ -19,8 +19,9 @@ def is_process_running(name: str) -> tuple:
 
 
 def watch(process_name: str, interval: float) -> None:
-    print(f"\n  👀 Watching for process: '{process_name}'  "
-          f"(check every {interval}s, Ctrl+C to stop)")
+    print(
+        f"\n  👀 Watching for process: '{process_name}'  (check every {interval}s, Ctrl+C to stop)"
+    )
     print("  " + "─" * 60)
 
     try:

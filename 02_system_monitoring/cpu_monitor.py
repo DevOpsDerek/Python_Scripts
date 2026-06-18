@@ -32,11 +32,11 @@ def render_bar(percent: float, width: int = 25) -> str:
     bar = "█" * filled + "░" * (width - filled)
 
     if percent <= 60:
-        colour = "\033[92m"   # Bright green
+        colour = "\033[92m"  # Bright green
     elif percent <= 80:
-        colour = "\033[93m"   # Bright yellow
+        colour = "\033[93m"  # Bright yellow
     else:
-        colour = "\033[91m"   # Bright red
+        colour = "\033[91m"  # Bright red
 
     reset = "\033[0m"
     return f"{colour}[{bar}]{reset} {percent:5.1f}%"
@@ -78,7 +78,9 @@ def monitor_cpu(interval: float = 1.0, history_len: int = 60) -> None:
                 print(f"  Frequency    {freq.current:,.0f} MHz  (max: {freq.max:,.0f} MHz)")
 
             if hasattr(psutil, "getloadavg"):
-                print(f"  Load avg     {load_avg[0]:.2f}  {load_avg[1]:.2f}  {load_avg[2]:.2f}  (1m / 5m / 15m)")
+                print(
+                    f"  Load avg     {load_avg[0]:.2f}  {load_avg[1]:.2f}  {load_avg[2]:.2f}  (1m / 5m / 15m)"
+                )
 
             # --- Per-core ---
             print(f"\n  {'─' * 55}")
@@ -110,7 +112,13 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Real-time CPU usage monitor.")
-    parser.add_argument("-i", "--interval", type=float, default=1.0, help="Refresh interval in seconds (default: 1.0)")
+    parser.add_argument(
+        "-i",
+        "--interval",
+        type=float,
+        default=1.0,
+        help="Refresh interval in seconds (default: 1.0)",
+    )
     args = parser.parse_args()
 
     monitor_cpu(interval=args.interval)

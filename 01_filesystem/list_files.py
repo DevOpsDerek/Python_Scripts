@@ -89,7 +89,9 @@ def list_files(directory: str = ".", show_hidden: bool = False) -> None:
         print(f"{name_display:<40} {size_display:>10}  {modified}")
 
     print("-" * 70)
-    print(f"  {len(dirs)} director{'y' if len(dirs) == 1 else 'ies'}, {len(files)} file{'s' if len(files) != 1 else ''}\n")
+    print(
+        f"  {len(dirs)} director{'y' if len(dirs) == 1 else 'ies'}, {len(files)} file{'s' if len(files) != 1 else ''}\n"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -102,12 +104,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="List files in a directory.")
     parser.add_argument(
         "directory",
-        nargs="?",          # "?" means the argument is optional
-        default=".",        # Default to the current working directory
+        nargs="?",  # "?" means the argument is optional
+        default=".",  # Default to the current working directory
         help="Directory to list (default: current directory)",
     )
     parser.add_argument(
-        "-a", "--all",
+        "-a",
+        "--all",
         action="store_true",  # Sets the value to True when the flag is present
         help="Show hidden files and directories",
     )

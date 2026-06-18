@@ -15,13 +15,13 @@ from pathlib import Path
 
 # Colour map for known log level keywords
 LEVEL_COLOURS = {
-    "ERROR":    "\033[91m",   # Red
+    "ERROR": "\033[91m",  # Red
     "CRITICAL": "\033[91m",
-    "FATAL":    "\033[91m",
-    "WARNING":  "\033[93m",   # Yellow
-    "WARN":     "\033[93m",
-    "INFO":     "\033[94m",   # Blue
-    "DEBUG":    "\033[90m",   # Dark grey
+    "FATAL": "\033[91m",
+    "WARNING": "\033[93m",  # Yellow
+    "WARN": "\033[93m",
+    "INFO": "\033[94m",  # Blue
+    "DEBUG": "\033[90m",  # Dark grey
 }
 RESET = "\033[0m"
 
@@ -84,7 +84,7 @@ def tail_file(path: str, lines: int = 20, follow: bool = True, interval: float =
                 if not new_lines:
                     time.sleep(interval)  # Nothing new — wait before checking again
                 else:
-                    sys.stdout.flush()    # Ensure output is written immediately
+                    sys.stdout.flush()  # Ensure output is written immediately
 
         except KeyboardInterrupt:
             print(f"\n\n  Stopped watching {file_path}\n")
@@ -95,12 +95,22 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Watch a log file in real time.")
     parser.add_argument("file", help="Path to the log file to watch")
-    parser.add_argument("-n", "--lines", type=int, default=20, help="Initial lines to show (default: 20)")
-    parser.add_argument("-f", "--follow", action="store_true", default=True,
-                        help="Follow the file for new lines (default: True)")
-    parser.add_argument("--no-follow", dest="follow", action="store_false",
-                        help="Print last N lines and exit")
-    parser.add_argument("-i", "--interval", type=float, default=0.5, help="Poll interval in seconds (default: 0.5)")
+    parser.add_argument(
+        "-n", "--lines", type=int, default=20, help="Initial lines to show (default: 20)"
+    )
+    parser.add_argument(
+        "-f",
+        "--follow",
+        action="store_true",
+        default=True,
+        help="Follow the file for new lines (default: True)",
+    )
+    parser.add_argument(
+        "--no-follow", dest="follow", action="store_false", help="Print last N lines and exit"
+    )
+    parser.add_argument(
+        "-i", "--interval", type=float, default=0.5, help="Poll interval in seconds (default: 0.5)"
+    )
     args = parser.parse_args()
 
     tail_file(args.file, lines=args.lines, follow=args.follow, interval=args.interval)

@@ -26,6 +26,7 @@ class SystemSnapshot:
     Dataclasses automatically generate __init__, __repr__, and __eq__
     so we don't have to write boilerplate code.
     """
+
     hostname: str = ""
     os_name: str = ""
     os_version: str = ""
@@ -49,9 +50,9 @@ def collect_system_info() -> SystemSnapshot:
 
     # --- Identity ---
     snap.hostname = socket.gethostname()
-    snap.os_name = platform.system()          # e.g. 'Darwin', 'Linux', 'Windows'
+    snap.os_name = platform.system()  # e.g. 'Darwin', 'Linux', 'Windows'
     snap.os_version = platform.version()
-    snap.architecture = platform.machine()    # e.g. 'x86_64', 'arm64'
+    snap.architecture = platform.machine()  # e.g. 'x86_64', 'arm64'
     snap.python_version = platform.python_version()
 
     # --- CPU ---
@@ -66,7 +67,7 @@ def collect_system_info() -> SystemSnapshot:
 
     # --- Memory ---
     mem = psutil.virtual_memory()  # Returns a named tuple with total, available, percent, etc.
-    snap.ram_total_gb = mem.total / 1_073_741_824      # bytes → GB (1 GB = 1024³ bytes)
+    snap.ram_total_gb = mem.total / 1_073_741_824  # bytes → GB (1 GB = 1024³ bytes)
     snap.ram_available_gb = mem.available / 1_073_741_824
     snap.ram_percent = mem.percent
 

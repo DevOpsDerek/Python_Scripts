@@ -38,6 +38,7 @@ from pathlib import Path
 
 # ── Step 1: Collect Data ─────────────────────────────────────────────────────
 
+
 def collect_cpu() -> dict:
     """Return a dict with CPU metrics.
 
@@ -104,6 +105,7 @@ def build_snapshot() -> dict:
 
 # ── Step 2: Save & Load ───────────────────────────────────────────────────────
 
+
 def save_snapshot(snapshot: dict, output_dir: str) -> Path:
     """Save the snapshot dict as a JSON file.
 
@@ -141,6 +143,7 @@ def load_latest_snapshot(output_dir: str) -> dict | None:
 
 # ── Step 3: Compare ───────────────────────────────────────────────────────────
 
+
 def compare_snapshots(old: dict, new: dict) -> None:
     """Print a comparison between two snapshots, highlighting changes.
 
@@ -166,8 +169,12 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Save a system health snapshot to JSON.")
-    parser.add_argument("--output", default="snapshots", help="Output directory (default: snapshots)")
-    parser.add_argument("--compare", action="store_true", help="Compare to the most recent snapshot")
+    parser.add_argument(
+        "--output", default="snapshots", help="Output directory (default: snapshots)"
+    )
+    parser.add_argument(
+        "--compare", action="store_true", help="Compare to the most recent snapshot"
+    )
     args = parser.parse_args()
 
     # TODO: Build the snapshot.

@@ -24,11 +24,24 @@ from pathlib import Path
 # ---------------------------------------------------------------------------
 # Colour helpers
 # ---------------------------------------------------------------------------
-def green(s: str) -> str:   return f"\033[92m{s}\033[0m"
-def red(s: str) -> str:     return f"\033[91m{s}\033[0m"
-def yellow(s: str) -> str:  return f"\033[93m{s}\033[0m"
-def bold(s: str) -> str:    return f"\033[1m{s}\033[0m"
-def dim(s: str) -> str:     return f"\033[2m{s}\033[0m"
+def green(s: str) -> str:
+    return f"\033[92m{s}\033[0m"
+
+
+def red(s: str) -> str:
+    return f"\033[91m{s}\033[0m"
+
+
+def yellow(s: str) -> str:
+    return f"\033[93m{s}\033[0m"
+
+
+def bold(s: str) -> str:
+    return f"\033[1m{s}\033[0m"
+
+
+def dim(s: str) -> str:
+    return f"\033[2m{s}\033[0m"
 
 
 # ---------------------------------------------------------------------------
@@ -187,7 +200,9 @@ examples:
     )
     parser.add_argument("--fix", action="store_true", help="Auto-fix safe issues in place")
     parser.add_argument("--file", metavar="PATH", help="Lint a single file instead of all scripts")
-    parser.add_argument("--explain", action="store_true", help="Print an explanation of the rule categories")
+    parser.add_argument(
+        "--explain", action="store_true", help="Print an explanation of the rule categories"
+    )
     args = parser.parse_args()
 
     if args.explain:

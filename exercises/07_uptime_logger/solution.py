@@ -13,9 +13,9 @@ import psutil
 def collect_sample() -> dict:
     return {
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "cpu_pct":   psutil.cpu_percent(interval=1),
-        "mem_pct":   psutil.virtual_memory().percent,
-        "disk_pct":  psutil.disk_usage("/").percent,
+        "cpu_pct": psutil.cpu_percent(interval=1),
+        "mem_pct": psutil.virtual_memory().percent,
+        "disk_pct": psutil.disk_usage("/").percent,
     }
 
 
@@ -24,8 +24,9 @@ def write_sample(output_file: str, sample: dict, write_header: bool) -> None:
         writer = csv.writer(f)
         if write_header:
             writer.writerow(["timestamp", "cpu_pct", "mem_pct", "disk_pct"])
-        writer.writerow([sample["timestamp"], sample["cpu_pct"],
-                         sample["mem_pct"], sample["disk_pct"]])
+        writer.writerow(
+            [sample["timestamp"], sample["cpu_pct"], sample["mem_pct"], sample["disk_pct"]]
+        )
 
 
 def run_logger(output_file: str, interval: float, max_samples: int) -> None:
@@ -44,7 +45,9 @@ def run_logger(output_file: str, interval: float, max_samples: int) -> None:
             s = collect_sample()
             write_sample(output_file, s, needs_header)
             needs_header = False
-            print(f"  {s['timestamp']:<22} {s['cpu_pct']:>6.1f}  {s['mem_pct']:>6.1f}  {s['disk_pct']:>6.1f}")
+            print(
+                f"  {s['timestamp']:<22} {s['cpu_pct']:>6.1f}  {s['mem_pct']:>6.1f}  {s['disk_pct']:>6.1f}"
+            )
             samples += 1
             if max_samples and samples >= max_samples:
                 break

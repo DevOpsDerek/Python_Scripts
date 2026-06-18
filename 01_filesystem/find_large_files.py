@@ -113,8 +113,12 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Find the largest files under a directory.")
     parser.add_argument("directory", nargs="?", default=".", help="Root directory to search")
-    parser.add_argument("-n", "--top", type=int, default=20, help="Number of files to show (default: 20)")
-    parser.add_argument("-m", "--min-mb", type=float, default=0.0, help="Minimum file size in MB (default: 0)")
+    parser.add_argument(
+        "-n", "--top", type=int, default=20, help="Number of files to show (default: 20)"
+    )
+    parser.add_argument(
+        "-m", "--min-mb", type=float, default=0.0, help="Minimum file size in MB (default: 0)"
+    )
 
     args = parser.parse_args()
     find_large_files(args.directory, top_n=args.top, min_size_mb=args.min_mb)

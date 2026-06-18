@@ -1,5 +1,7 @@
 # 🐍 Python SysAdmin Script Library
 
+[![CI](https://github.com/DevOpsDerek/Python_Scripts/actions/workflows/ci.yml/badge.svg)](https://github.com/DevOpsDerek/Python_Scripts/actions/workflows/ci.yml)
+
 A beginner-friendly collection of Python scripts for common system administration tasks.
 Each script is standalone, heavily commented, and designed to teach Python concepts through real-world examples.
 

@@ -151,7 +151,9 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Find duplicate files in a directory.")
-    parser.add_argument("directory", nargs="?", default=".", help="Directory to scan (default: current)")
+    parser.add_argument(
+        "directory", nargs="?", default=".", help="Directory to scan (default: current)"
+    )
     args = parser.parse_args()
 
     dupes = find_duplicates(args.directory)

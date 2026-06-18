@@ -13,10 +13,20 @@ import psutil  # pip install psutil
 
 
 # ANSI colour helpers — wrap text in escape codes for terminal colour
-def green(s: str) -> str:  return f"\033[92m{s}\033[0m"
-def yellow(s: str) -> str: return f"\033[93m{s}\033[0m"
-def red(s: str) -> str:    return f"\033[91m{s}\033[0m"
-def bold(s: str) -> str:   return f"\033[1m{s}\033[0m"
+def green(s: str) -> str:
+    return f"\033[92m{s}\033[0m"
+
+
+def yellow(s: str) -> str:
+    return f"\033[93m{s}\033[0m"
+
+
+def red(s: str) -> str:
+    return f"\033[91m{s}\033[0m"
+
+
+def bold(s: str) -> str:
+    return f"\033[1m{s}\033[0m"
 
 
 def colorize_usage(percent: float, text: str) -> str:
@@ -53,8 +63,15 @@ def show_disk_usage(skip_virtual: bool = True) -> None:
     """
     # These filesystem types are usually virtual/proc/dev — not real storage
     VIRTUAL_FSTYPES = {
-        "tmpfs", "devtmpfs", "devfs", "proc", "sysfs",
-        "cgroup", "cgroup2", "overlay", "squashfs",
+        "tmpfs",
+        "devtmpfs",
+        "devfs",
+        "proc",
+        "sysfs",
+        "cgroup",
+        "cgroup2",
+        "overlay",
+        "squashfs",
     }
 
     partitions = psutil.disk_partitions(all=False)  # all=False skips virtual mounts on Linux

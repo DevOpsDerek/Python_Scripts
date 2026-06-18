@@ -107,9 +107,19 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Log system stats to a CSV file.")
-    parser.add_argument("-o", "--output", default="stats.csv", help="Output CSV file (default: stats.csv)")
-    parser.add_argument("-i", "--interval", type=float, default=5.0, help="Sample interval in seconds (default: 5)")
-    parser.add_argument("-n", "--max-samples", type=int, default=0, help="Stop after N samples (default: run forever)")
+    parser.add_argument(
+        "-o", "--output", default="stats.csv", help="Output CSV file (default: stats.csv)"
+    )
+    parser.add_argument(
+        "-i", "--interval", type=float, default=5.0, help="Sample interval in seconds (default: 5)"
+    )
+    parser.add_argument(
+        "-n",
+        "--max-samples",
+        type=int,
+        default=0,
+        help="Stop after N samples (default: run forever)",
+    )
     args = parser.parse_args()
 
     run_logger(args.output, args.interval, args.max_samples)

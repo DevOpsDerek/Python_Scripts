@@ -41,11 +41,11 @@ def count_errors(log_path: str, top_n: int = 20) -> None:
         print(f"  ❌ File not found: {log_path}")
         return
 
-    error_lines = 0        # Total lines containing an error keyword
-    total_lines = 0        # Total lines in file
-    level_counter = Counter()            # {level: count}
-    message_counter = Counter()          # {error_message_snippet: count}
-    hourly_errors: Counter = Counter()   # {hour: count}
+    error_lines = 0  # Total lines containing an error keyword
+    total_lines = 0  # Total lines in file
+    level_counter = Counter()  # {level: count}
+    message_counter = Counter()  # {error_message_snippet: count}
+    hourly_errors: Counter = Counter()  # {hour: count}
 
     with open(path, encoding="utf-8", errors="replace") as f:
         for line in f:
@@ -66,9 +66,9 @@ def count_errors(log_path: str, top_n: int = 20) -> None:
             if msg_match:
                 msg = msg_match.group(1).strip()
                 # Strip dynamic parts: numbers, UUIDs, paths — keeps grouping meaningful
-                msg_clean = re.sub(r"\b\d+\b", "N", msg)          # Replace numbers with N
+                msg_clean = re.sub(r"\b\d+\b", "N", msg)  # Replace numbers with N
                 msg_clean = re.sub(r"[0-9a-f]{8}-[0-9a-f-]+", "UUID", msg_clean)  # UUIDs
-                msg_clean = re.sub(r"/\S+", "/PATH", msg_clean)    # File paths
+                msg_clean = re.sub(r"/\S+", "/PATH", msg_clean)  # File paths
                 message_counter[msg_clean[:80]] += 1
 
             # Try to extract hour from common timestamp formats
@@ -123,7 +123,9 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Count and summarise errors in a log file.")
     parser.add_argument("logfile", help="Path to the log file")
-    parser.add_argument("-n", "--top", type=int, default=20, help="Top N error messages (default: 20)")
+    parser.add_argument(
+        "-n", "--top", type=int, default=20, help="Top N error messages (default: 20)"
+    )
     args = parser.parse_args()
 
     count_errors(args.logfile, top_n=args.top)
