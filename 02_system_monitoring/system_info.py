@@ -56,8 +56,10 @@ def collect_system_info() -> SystemSnapshot:
     snap.python_version = platform.python_version()
 
     # --- CPU ---
-    # psutil.cpu_freq() returns current/min/max MHz; may be None on some systems
-    freq = psutil.cpu_freq()
+    # psutil.cpu_freq() returns current/min/max MHz; not available on all
+    # platforms (e.g. macOS ARM64 raises AttributeError), so guard with getattr.
+    _cpu_freq_fn = getattr(psutil, "cpu_freq", None)
+    freq = _cpu_freq_fn() if _cpu_freq_fn is not None else None
     snap.cpu_freq_mhz = freq.current if freq else 0.0
     snap.cpu_cores_physical = psutil.cpu_count(logical=False) or 0
     snap.cpu_cores_logical = psutil.cpu_count(logical=True) or 0

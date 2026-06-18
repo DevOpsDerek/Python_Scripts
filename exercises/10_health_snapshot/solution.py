@@ -13,7 +13,9 @@ import psutil
 
 
 def collect_cpu() -> dict:
-    freq = psutil.cpu_freq()
+    # psutil.cpu_freq() is not available on all platforms (e.g. macOS ARM64).
+    _cpu_freq_fn = getattr(psutil, "cpu_freq", None)
+    freq = _cpu_freq_fn() if _cpu_freq_fn is not None else None
     return {
         "percent": psutil.cpu_percent(interval=1),
         "cores_physical": psutil.cpu_count(logical=False),
