@@ -11,7 +11,34 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
+  # Central GitHub Actions and gh-aw source validation; Python checks stay local.
+  automation-validation:
+    name: Validate GitHub automation
+    permissions:
+      contents: read
+    uses: DevOpsDerek/workflows/.github/workflows/validate-agentic-workflows.yml@dac4b81c298cb3ea6821ea312efa5375f42d5ccb
+
+  # Parse a side-effecting script without running it or sending email.
+  python-syntax:
+    name: Python syntax (no execution)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Parse SMTP report script
+        uses: DevOpsDerek/workflows/.github/actions/check-python-syntax@dac4b81c298cb3ea6821ea312efa5375f42d5ccb
+        with:
+          python-version: "3.12.8"
+          source-path: 06_automation/send_report.py
+
   # ── Job 1: Lint ──────────────────────────────────────────────────────────────
   lint:
     name: Lint (ruff)
