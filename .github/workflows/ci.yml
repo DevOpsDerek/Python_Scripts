@@ -43,7 +43,7 @@ jobs:
     name: Lint (ruff)
     permissions:
       contents: read
-    uses: DevOpsDerek/workflows/.github/workflows/lint-python-ruff.yml@5ecebff22598835cbf5ccd7bfa07c036cce22ee9
+    uses: DevOpsDerek/workflows/.github/workflows/lint-python-ruff.yml@30f86d7d8536364b0a31de4bc66214b39e8785bb
     with:
       python-version: "3.12.8"
       ruff-version: "0.11.13"
