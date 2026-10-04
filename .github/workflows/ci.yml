@@ -39,33 +39,19 @@ jobs:
           python-version: "3.12.8"
           source-path: 06_automation/send_report.py
 
-  # ── Job 1: Lint ──────────────────────────────────────────────────────────────
   lint:
     name: Lint (ruff)
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install ruff
-        run: pip install ruff
-
-      - name: Run ruff check
-        run: ruff check .
-
-      - name: Run ruff format check
-        run: ruff format --check .
+    permissions:
+      contents: read
+    uses: DevOpsDerek/workflows/.github/workflows/lint/python-ruff.yml@cd4f07509e9efb0c498217c3be352e762bd0c149
+    with:
+      python-version: "3.12.8"
+      ruff-version: "0.11.13"
 
   # ── Job 2: Test matrix ───────────────────────────────────────────────────────
   test:
     name: Test (Python ${{ matrix.python-version }} / ${{ matrix.os }})
-    needs: lint   # Only run tests if lint passes
+    needs: lint
     runs-on: ${{ matrix.os }}
 
     strategy:

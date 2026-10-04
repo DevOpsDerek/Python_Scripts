@@ -28,6 +28,15 @@ sysadmin-scripts/
 pip install -r requirements.txt
 ```
 
+### Developer Checks
+Install the development tools and run the read-only lint and format checks:
+```bash
+pip install -r requirements-dev.txt
+ruff check .
+ruff format --check .
+```
+These commands report issues without modifying files.
+
 ### Run Any Script
 ```bash
 python 01_filesystem/list_files.py
